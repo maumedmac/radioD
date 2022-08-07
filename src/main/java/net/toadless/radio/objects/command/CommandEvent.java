@@ -160,7 +160,7 @@ public class CommandEvent
 
     public boolean isDeveloper()
     {
-        return List.of(radio.getConfiguration().getString(ConfigOption.PRIVILEGEDUSERS).split(",")).contains(getAuthor().getId());
+        return radio.getConfiguration().getList(ConfigOption.PRIVILEGEDUSERS).contains(getAuthor().getId());
     }
 
     public boolean isFromGuild()

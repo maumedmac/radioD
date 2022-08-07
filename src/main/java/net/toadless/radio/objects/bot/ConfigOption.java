@@ -2,29 +2,24 @@ package net.toadless.radio.objects.bot;
 
 public enum ConfigOption
 {
-    TOKEN("token", "token"),
-    PRIVILEGEDUSERS("privilegedusers", "0000000000000, 0000000000000"),
+    PORT("port"),
 
-    SPOTIFYID("spotifyid", "spotifyid"),
-    SPOTIFYSECRET("spotifysecret", "spotifysecret"),
+    TOKEN("token"),
+    PRIVILEGEDUSERS("privileged-users"),
 
-    DBUSERNAME("dbusername", "username"),
-    DBPASSWORD("dbpassword", "password"),
-    DBDRIVER("dbdriver", "org.postgresql.Driver"),
-    DBURL("dburl", "jdbc:type://host:port/database");
+    SPOTIFYID("spotify.id"),
+    SPOTIFYSECRET("spotify.secret"),
+
+    DBUSERNAME("database.username"),
+    DBPASSWORD("database.password"),
+    DBURL("database.url"),
+    DBDRIVER("database.driver"); // jdbc:type://host:port/database
 
     private final String key;
-    private final String defaultValue;
 
-    ConfigOption(String key, String defaultValue)
+    ConfigOption(String key)
     {
         this.key = key;
-        this.defaultValue = defaultValue;
-    }
-
-    public String getDefaultValue()
-    {
-        return defaultValue;
     }
 
     public String getKey()

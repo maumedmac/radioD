@@ -1,6 +1,5 @@
-
 # project files
-bot.cfg
+config.yml
 
 # eclipse files
 .classpath

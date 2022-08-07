@@ -1,178 +1,68 @@
 package net.toadless.radio.objects.bot;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
 import net.toadless.radio.Radio;
 import org.jetbrains.annotations.NotNull;
+import org.simpleyaml.configuration.file.FileConfiguration;
+import org.simpleyaml.configuration.file.YamlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Configuration
 {
     public static final File CONFIG_FOLDER = new File("config");
-    public static final File CONFIG_FILE = new File(CONFIG_FOLDER, "bot.cfg");
+    public static final File CONFIG_FILE = new File(CONFIG_FOLDER, "config.yml");
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
+
     private final Radio radio;
-    private final List<ConfigurationValue> configValues;
+    private final FileConfiguration configuration;
 
     public Configuration(@NotNull Radio radio)
     {
         this.radio = radio;
-        initFolder();
-        initFile();
-        this.configValues = loadInitialValues();
+        this.configuration = initializeConfigFile();
     }
 
-    private void initFile()
+    private FileConfiguration initializeConfigFile()
     {
+        if (!CONFIG_FOLDER.exists() || !CONFIG_FILE.exists())
+        {
+            LOGGER.error("Unable to load config, please create a config.yml file, it should be located in " +
+                    "a folder called \"config\". (Example file here: INSERT_FILE_LINK_HERE)");
+
+            System.exit(-1);
+        }
+
+        FileConfiguration configuration = new YamlConfiguration();
+
         try
         {
-            if (CONFIG_FILE.createNewFile())
-            {
-                LOGGER.debug("Created new config file.");
-            }
-            else
-            {
-                LOGGER.debug("Config file exists.");
-            }
+            configuration.load(CONFIG_FILE);
         }
         catch (Exception exception)
         {
-            radio.getLogger().error("An exception occurred while creating the config file, abort.", exception);
-            System.exit(1);
+            radio.getLogger().error("Unable to load yml configuration file... ", exception);
+            System.exit(-1);
         }
+
+        return configuration;
     }
 
-    private void initFolder()
+    public String getString(ConfigOption configOption)
     {
-        try
-        {
-            if (CONFIG_FOLDER.mkdir())
-            {
-                LOGGER.debug("Created new config file.");
-            }
-            else
-            {
-                LOGGER.debug("Config file exists.");
-            }
-        }
-        catch (Exception exception)
-        {
-            radio.getLogger().error("An exception occurred while creating the config folder, abort.", exception);
-            System.exit(1);
-        }
+        return configuration.getString(configOption.getKey());
     }
 
-    private List<ConfigurationValue> loadInitialValues()
+    public int getInt(ConfigOption configOption)
     {
-        List<ConfigurationValue> values = new ArrayList<>();
-        try
-        {
-            BufferedReader reader = new BufferedReader(new FileReader(CONFIG_FILE));
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                if (!line.contains("=") || line.startsWith("#"))
-                {
-                    continue;
-                }
-                String[] elements = line.split("=");
-                values.add(new ConfigurationValue(elements[0], elements[1]));
-            }
-            return applyDefaults(values);
-        }
-        catch (Exception exception)
-        {
-            radio.getLogger().error("A config error occurred", exception);
-            return Collections.emptyList();
-        }
+        return configuration.getInt(configOption.getKey());
     }
 
-    private List<ConfigurationValue> applyDefaults(List<ConfigurationValue> loadedValues)
+    public List<String> getList(ConfigOption configOption)
     {
-        for (ConfigOption configOption : ConfigOption.values())
-        {
-            if (loadedValues.stream().map(ConfigurationValue::getKey).noneMatch(key -> configOption.getKey().equals(key)))
-            {
-                loadedValues.add(new ConfigurationValue(configOption.getKey(), configOption.getDefaultValue()));
-            }
-        }
-        save(loadedValues);
-        return Collections.unmodifiableList(loadedValues);
-    }
-
-    private void save(List<ConfigurationValue> configValues)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ConfigurationValue configurationValue : configValues)
-        {
-            stringBuilder
-                    .append(configurationValue.getKey())
-                    .append("=")
-                    .append(configurationValue.getValue())
-                    .append("\n");
-        }
-        try
-        {
-            FileWriter fileWriter = new FileWriter(CONFIG_FILE);
-            fileWriter.write(stringBuilder.toString());
-            fileWriter.flush();
-        }
-        catch (Exception exception)
-        {
-            radio.getLogger().error("A config error occurred", exception);
-        }
-    }
-
-    public @NotNull String getString(ConfigOption configOption)
-    {
-        synchronized (configValues)
-        {
-            for (ConfigurationValue configurationValue : configValues)
-            {
-                if (configurationValue.getKey().equals(configOption.getKey()))
-                {
-                    return configurationValue.getValue();
-                }
-            }
-            return configOption.getDefaultValue();
-        }
-    }
-
-    private static class ConfigurationValue
-    {
-        private String key;
-        private String value;
-
-        public ConfigurationValue(String key, String value)
-        {
-            this.key = key;
-            this.value = value;
-        }
-
-        public String getKey()
-        {
-            return key;
-        }
-
-        public void setKey(String key)
-        {
-            this.key = key;
-        }
-
-        public String getValue()
-        {
-            return value;
-        }
-
-        public void setValue(String value)
-        {
-            this.value = value;
-        }
+        return configuration.getStringList(configOption.getKey());
     }
 }
