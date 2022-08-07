@@ -59,7 +59,7 @@ public class DefaultAudioLoader implements AudioLoadResultHandler
         }
         catch (IndexOutOfBoundsException exception)
         {
-            failure.accept(new CommandResultException("Couldn't find anything matchsing your query."));
+            failure.accept(new CommandResultException("Couldn't find anything matching your query."));
         }
     }
 
