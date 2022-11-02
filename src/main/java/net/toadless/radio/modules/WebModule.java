@@ -1,8 +1,9 @@
 package net.toadless.radio.modules;
 
 import io.javalin.Javalin;
-import io.javalin.core.JavalinConfig;
+import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
+import io.javalin.plugin.bundled.CorsPluginConfig;
 import net.dv8tion.jda.api.utils.data.DataObject;
 import net.toadless.radio.Radio;
 import net.toadless.radio.objects.bot.ConfigOption;
@@ -65,6 +66,6 @@ public class WebModule extends Module
     public void setJavalinConfig(JavalinConfig config)
     {
         config.showJavalinBanner = false;
-        config.enableCorsForAllOrigins();
+        config.plugins.enableCors(cors -> cors.add(CorsPluginConfig::anyHost));
     }
 }
