@@ -9,7 +9,7 @@
     <a href="https://github.com/toadless/radio/stargazers"><img src="https://img.shields.io/github/stars/toadless/radio.svg" alt="GitHub Stars"></a>
     <a href="https://toadless.net"><img src="https://img.shields.io/website/https/toadless.net.svg?down_color=red&down_message=offline&up_message=online" alt="Website"></a>
     <br><br>
-    <a href="https://discord.gg/8Nkgxg25Xw"><img src="https://discordapp.com/api/guilds/954456505334263828/widget.png?style=banner2" alt="Discord Server"></a>
+    <a href="https://discord.gg/4KzrUKd3"><img src="https://discord.com/api/guilds/1036365291652923534/widget.png?style=shield" alt="Discord Server"></a>
 </p>
 
 ---
