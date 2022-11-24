@@ -35,7 +35,7 @@ dependencies {
     //Misc / Util
     implementation ("info.debatty:java-string-similarity:2.0.0")
     implementation ("io.github.classgraph:classgraph:4.8.149")
-    implementation ("ch.qos.logback:logback-classic:1.4.4")
+    implementation ("ch.qos.logback:logback-classic:1.4.5")
     implementation ("net.jodah:expiringmap:0.5.10")
     implementation ("se.michaelthelin.spotify:spotify-web-api-java:7.2.2")
     implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8")
