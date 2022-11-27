@@ -4,6 +4,8 @@ public enum ConfigOption
 {
     PORT("port"),
 
+    PREFIX("prefix"),
+
     TOKEN("token"),
     PRIVILEGEDUSERS("privileged-users"),
 
