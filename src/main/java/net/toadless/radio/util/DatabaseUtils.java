@@ -6,6 +6,7 @@ import net.toadless.radio.Radio;
 import net.toadless.radio.jooq.Tables;
 import net.toadless.radio.jooq.tables.Guilds;
 import net.toadless.radio.modules.DatabaseModule;
+import net.toadless.radio.objects.bot.ConfigOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,26 +58,8 @@ public class DatabaseUtils
         {
             var context = radio.getModules().get(DatabaseModule.class).getContext(connection)
                     .insertInto(Tables.GUILDS)
-                    .columns(Guilds.GUILDS.GUILD_ID)
-                    .values(guild.getIdLong())
-                    .onDuplicateKeyIgnore();
-            context.execute();
-        }
-        catch (Exception exception)
-        {
-            radio.getLogger().error("An SQL error occurred", exception);
-        }
-    }
-
-    public static void registerGuild(long guildId, Radio radio)
-    {
-        LOGGER.debug("Removed guild " + guildId);
-        try (Connection connection = radio.getModules().get(DatabaseModule.class).getConnection())
-        {
-            var context = radio.getModules().get(DatabaseModule.class).getContext(connection)
-                    .insertInto(Tables.GUILDS)
-                    .columns(Guilds.GUILDS.GUILD_ID)
-                    .values(guildId)
+                    .columns(Guilds.GUILDS.GUILD_ID, Guilds.GUILDS.PREFIX)
+                    .values(guild.getIdLong(), radio.getConfiguration().getString(ConfigOption.PREFIX))
                     .onDuplicateKeyIgnore();
             context.execute();
         }
