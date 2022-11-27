@@ -12,8 +12,6 @@ import net.toadless.radio.objects.command.CommandEvent;
 
 public class EmbedUtils
 {
-    public static final int REACTION_LIMIT = 20;
-
     private EmbedUtils()
     {
         //Overrides the default, public, constructor
@@ -57,7 +55,7 @@ public class EmbedUtils
         sendDeletingEmbed(ctx.getChannel(), new EmbedBuilder()
                 .setDescription(Emoji.FAILURE.getAsChat() +
                         " You do not have the following required permissions:"
-                        + perms.toString())
+                        + perms)
                 .setColor(Color.RED)
                 .setTimestamp(Instant.now()));
     }
@@ -73,7 +71,7 @@ public class EmbedUtils
         sendDeletingEmbed(ctx.getChannel(), new EmbedBuilder()
                 .setDescription(Emoji.FAILURE.getAsChat() +
                         " I do not have the following required permission:`"
-                        + perms.toString())
+                        + perms)
                 .setColor(Color.RED)
                 .setTimestamp(Instant.now()));
     }
@@ -97,17 +95,12 @@ public class EmbedUtils
 
     public static void sendDeletingEmbed(MessageChannel channel, EmbedBuilder embed, long delay)
     {
-        channel.sendMessage(embed.build()).queue(message -> message.delete().queueAfter(delay, TimeUnit.MILLISECONDS, null, error ->
+        channel.sendMessageEmbeds(embed.build()).queue(message -> message.delete().queueAfter(delay, TimeUnit.MILLISECONDS, null, error ->
         { }));
     }
 
     public static void sendDeletingEmbed(MessageChannel channel, EmbedBuilder embed)
     {
         sendDeletingEmbed(channel, embed, 10000);
-    }
-
-    public static void sendReplacedEmbed(Message message, EmbedBuilder newEmbed)
-    {
-        message.editMessage(newEmbed.build()).queue();
     }
 }
