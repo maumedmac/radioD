@@ -1,6 +1,5 @@
 package net.toadless.radio.web.info;
 
-
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import net.dv8tion.jda.api.JDAInfo;
