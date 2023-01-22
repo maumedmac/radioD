@@ -56,7 +56,7 @@ dependencies {
     jooqGenerator ("org.postgresql:postgresql:42.5.0")
 
     implementation ("com.zaxxer:HikariCP:5.0.1")
-    implementation ("org.jooq:jooq:3.17.6")
+    implementation ("org.jooq:jooq:3.17.7")
 }
 
 jooq {
