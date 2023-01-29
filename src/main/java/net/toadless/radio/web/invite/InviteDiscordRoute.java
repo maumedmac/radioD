@@ -9,6 +9,6 @@ public class InviteDiscordRoute implements Handler
     @Override
     public void handle(@NotNull Context ctx)
     {
-        ctx.redirect("https://discord.gg/4KzrUKd3");
+        ctx.redirect("https://discord.gg/9ywrGPGs25");
     }
 }
