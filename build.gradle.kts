@@ -41,7 +41,7 @@ dependencies {
     implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.3")
 
     //Web
-    implementation ("org.jsoup:jsoup:1.15.3")
+    implementation ("org.jsoup:jsoup:1.15.4")
     implementation ("io.javalin:javalin:5.3.2")
 
     //Eval
