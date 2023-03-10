@@ -42,7 +42,7 @@ dependencies {
 
     //Web
     implementation ("org.jsoup:jsoup:1.15.4")
-    implementation ("io.javalin:javalin:5.3.2")
+    implementation ("io.javalin:javalin:5.4.2")
 
     //Eval
     implementation ("org.codehaus.groovy:groovy-jsr223:3.0.15")
