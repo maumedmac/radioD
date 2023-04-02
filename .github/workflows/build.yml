@@ -38,7 +38,7 @@ jobs:
 
         ######################################################## setup gradle
       - name: 🖥️ Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+        uses: gradle/wrapper-validation-action@v1.0.6
 
 
 
@@ -101,14 +101,14 @@ jobs:
 
 
 
-        ######################################################## reload my vps
-      - name: 🔃 reload vps
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASS }}
-          port: 22
-          script: |
-            cd ~/docker/radio
-            ./rebuild
+#        ######################################################## reload my vps
+#      - name: 🔃 reload vps
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.VPS_HOST }}
+#          username: ${{ secrets.VPS_USER }}
+#          password: ${{ secrets.VPS_PASS }}
+#          port: 22
+#          script: |
+#            cd ~/docker/radio
+#            ./rebuild
