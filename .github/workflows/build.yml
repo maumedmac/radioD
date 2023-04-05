@@ -51,13 +51,9 @@ jobs:
 
         ######################################################## release on github
       - name: create release
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: ncipollo/release-action@v1.12.0
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
-          title: "Radio: Latest!"
-          files: |
+          artifacts: |
             LICENSE
             build/libs/Radio-all.jar
 
