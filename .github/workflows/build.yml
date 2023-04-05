@@ -32,7 +32,6 @@ jobs:
         uses: actions/setup-java@v1.4.4
         with:
           java-version: '15'
-          distribution: 'adopt'
 
 
 
@@ -54,6 +53,7 @@ jobs:
         uses: ncipollo/release-action@v1.12.0
         with:
           tag: "1.0.0"
+          allowUpdates: true
           artifacts: |
             LICENSE
             build/libs/Radio-all.jar
