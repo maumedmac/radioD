@@ -332,6 +332,19 @@ public class MusicModule extends Module
     @Override
     public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event)
     {
+        // check if Radio has been moved vc
+        if (event.getChannelJoined() != null &&
+                event.getChannelJoined() == Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getIdLong())).getVoiceState()).getChannel())
+        {
+            long humansInVC = event.getChannelJoined().getMembers().stream().filter(member -> !member.getUser().isBot()).count();
+            if (humansInVC == 0)
+            {
+                cleanupPlayer(event.getGuild(), "Disconnected due to inactivity.");
+            }
+            return;
+        }
+
+        // check if radio was kicked, or vc is inactive (empty)
         if (event.getChannelLeft() != Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getIdLong())).getVoiceState()).getChannel() ||
                 event.getChannelLeft() == null)
         {
@@ -349,19 +362,4 @@ public class MusicModule extends Module
            cleanupPlayer(event.getGuild(), "Disconnected due to inactivity.");
         }
     }
-
-//    @Override
-//    public void onGuildVoiceMove(GuildVoiceMoveEvent event)
-//    {
-//        if (event.getChannelLeft() != Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getIdLong())).getVoiceState()).getChannel())
-//        {
-//            return;
-//        }
-//
-//        long humansInVC = event.getChannelLeft().getMembers().stream().filter(member -> !member.getUser().isBot()).count();
-//        if (humansInVC == 0)
-//        {
-//            cleanupPlayer(event.getGuild(), "Disconnected due to inactivity.");
-//        }
-//    }
 }
