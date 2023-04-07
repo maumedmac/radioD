@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.SelfUser;
-import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
@@ -78,11 +78,12 @@ public class Radio extends ListenerAdapter
 
                         GatewayIntent.GUILD_MESSAGES,
                         GatewayIntent.GUILD_MESSAGE_REACTIONS,
-                        GatewayIntent.GUILD_VOICE_STATES)
+                        GatewayIntent.GUILD_VOICE_STATES,
+
+                        GatewayIntent.MESSAGE_CONTENT)
 
                 .disableCache(
                         CacheFlag.ACTIVITY,
-                        CacheFlag.EMOTE,
                         CacheFlag.CLIENT_STATUS,
                         CacheFlag.ROLE_TAGS,
                         CacheFlag.ONLINE_STATUS,
