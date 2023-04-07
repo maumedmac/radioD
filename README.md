@@ -1,4 +1,4 @@
-![Radio Logo](https://i.imgur.com/54GYK3A.png)
+![Radio Logo](https://cdn.toadless.net/21fea690-661a-426e-76a6-80641b2ca700/public)
 
 <p align="center">
     <a href="https://github.com/toadless/radio/blob/main/LICENSE"><img src="https://img.shields.io/github/license/toadless/radio.svg" alt="GitHub License"></a>
