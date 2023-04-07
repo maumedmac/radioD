@@ -85,6 +85,6 @@ public enum Emote
 
     public Emoji getAsEmoji()
     {
-        return Emoji.fromFormatted(getAsChat());
+        return Emoji.fromFormatted(getAsReaction());
     }
 }
