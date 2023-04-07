@@ -48,7 +48,7 @@ dependencies {
 
     //Discord
     implementation ("net.dv8tion:JDA:5.0.0-beta.6") // use beta version to fix discord voice
-    implementation ("com.github.walkyst:lavaplayer-fork:1.8.4")
+    implementation ("com.github.walkyst:lavaplayer-fork:1.4.0")
 
     //Database
     implementation ("org.postgresql:postgresql:42.6.0")
