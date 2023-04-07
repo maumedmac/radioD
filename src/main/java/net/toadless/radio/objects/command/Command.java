@@ -3,11 +3,11 @@ package net.toadless.radio.objects.command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
 import net.dv8tion.jda.api.Permission;
 import net.toadless.radio.objects.exception.*;
 import net.toadless.radio.util.EmbedUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class Command
 {

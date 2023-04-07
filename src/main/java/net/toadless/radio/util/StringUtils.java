@@ -6,9 +6,9 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.utils.MarkdownSanitizer;
-import net.toadless.radio.objects.Emoji;
+import net.toadless.radio.objects.Emote;
 
 public class StringUtils
 {
@@ -48,16 +48,16 @@ public class StringUtils
     {
         return switch (number)
                 {
-                    case 1 -> Emoji.ONE.getAsChat();
-                    case 2 -> Emoji.TWO.getAsChat();
-                    case 3 -> Emoji.THREE.getAsChat();
-                    case 4 -> Emoji.FOUR.getAsChat();
-                    case 5 -> Emoji.FIVE.getAsChat();
-                    case 6 -> Emoji.SIX.getAsChat();
-                    case 7 -> Emoji.SEVEN.getAsChat();
-                    case 8 -> Emoji.EIGHT.getAsChat();
-                    case 9 -> Emoji.NINE.getAsChat();
-                    case 0 -> Emoji.ZERO.getAsChat();
+                    case 1 -> Emote.ONE.getAsChat();
+                    case 2 -> Emote.TWO.getAsChat();
+                    case 3 -> Emote.THREE.getAsChat();
+                    case 4 -> Emote.FOUR.getAsChat();
+                    case 5 -> Emote.FIVE.getAsChat();
+                    case 6 -> Emote.SIX.getAsChat();
+                    case 7 -> Emote.SEVEN.getAsChat();
+                    case 8 -> Emote.EIGHT.getAsChat();
+                    case 9 -> Emote.NINE.getAsChat();
+                    case 0 -> Emote.ZERO.getAsChat();
                     default -> "";
                 };
     }
@@ -119,7 +119,7 @@ public class StringUtils
             if (input.length() >= Message.MAX_CONTENT_LENGTH)
             {
                 channel.sendMessage(input.substring(0, Message.MAX_CONTENT_LENGTH))
-                        .allowedMentions(Collections.emptyList())
+                        .setAllowedMentions(Collections.emptyList())
                         .queue();
 
                 input = input.substring(Message.MAX_CONTENT_LENGTH);
@@ -127,7 +127,7 @@ public class StringUtils
             else
             {
                 channel.sendMessage(input)
-                        .allowedMentions(Collections.emptyList())
+                        .setAllowedMentions(Collections.emptyList())
                         .queue();
                 break;
             }

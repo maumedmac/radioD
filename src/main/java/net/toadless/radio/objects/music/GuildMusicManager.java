@@ -5,12 +5,14 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
 import java.util.List;
-import javax.annotation.Nullable;
 
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
-import net.toadless.radio.objects.Emoji;
+import net.toadless.radio.objects.Emote;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class GuildMusicManager
 {
@@ -76,14 +78,14 @@ public class GuildMusicManager
         {
             setControllerId(message.getIdLong());
 
-            message.addReaction(Emoji.ARROW_LEFT.getAsReaction()).queue(success -> {}, failure -> {});
-            message.addReaction(Emoji.PLAY_PAUSE.getAsReaction()).queue(success -> {}, failure -> {});
-            message.addReaction(Emoji.ARROW_RIGHT.getAsReaction()).queue(success -> {}, failure -> {});
-            message.addReaction(Emoji.VOLUME_DOWN.getAsReaction()).queue(success -> {}, failure -> {});
-            message.addReaction(Emoji.VOLUME_UP.getAsReaction()).queue(success -> {}, failure -> {});
-            message.addReaction(Emoji.SHUFFLE.getAsReaction()).queue(success -> {}, failure -> {});
-            message.addReaction(Emoji.REPEAT.getAsReaction()).queue(success -> {}, failure -> {});
-            message.addReaction(Emoji.CROSS.getAsReaction()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.ARROW_LEFT.getAsEmoji()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.PLAY_PAUSE.getAsEmoji()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.ARROW_RIGHT.getAsEmoji()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.VOLUME_DOWN.getAsEmoji()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.VOLUME_UP.getAsEmoji()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.SHUFFLE.getAsEmoji()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.REPEAT.getAsEmoji()).queue(success -> {}, failure -> {});
+            message.addReaction(Emote.CROSS.getAsEmoji()).queue(success -> {}, failure -> {});
         }, error ->
         {
             bind(null);

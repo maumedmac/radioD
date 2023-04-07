@@ -2,7 +2,8 @@ package net.toadless.radio.commands.maincommands.music;
 
 import java.util.List;
 import java.util.function.Consumer;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.toadless.radio.modules.MusicModule;
 import net.toadless.radio.objects.command.Command;
 import net.toadless.radio.objects.command.CommandEvent;
@@ -32,7 +33,7 @@ public class JoinCommand extends Command
         if (CommandChecks.boundToChannel(manager, event.getChannel(), failure)) return;
         if (CommandChecks.isUserDj(event, failure)) return;
 
-        VoiceChannel channel = event.getMember().getVoiceState().getChannel();
+        VoiceChannel channel = event.getMember().getVoiceState().getChannel().asVoiceChannel(); // Safe due to CommandChecks
         manager.join(channel);
         event.replySuccess("Joined " + channel.getName());
         manager.bind(event.getChannel());

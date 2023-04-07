@@ -6,6 +6,9 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.toadless.radio.objects.command.CommandEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
@@ -174,9 +177,9 @@ public class Parser
         JDA jda = event.getJDA();
         SelfUser selfUser = jda.getSelfUser();
 
-        if (!message.getMentions().isEmpty()) //Direct mention
+        if (!message.getMentions().getMentions(type).isEmpty()) //Direct mention
         {
-            List<IMentionable> mentions = message.getMentions(type);
+            List<IMentionable> mentions = message.getMentions().getMentions(type);
 
             if (mentions.isEmpty())
             {

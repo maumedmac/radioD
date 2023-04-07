@@ -1,6 +1,8 @@
 package net.toadless.radio.objects;
 
-public enum Emoji
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+
+public enum Emote
 {
     THUMB_UP(":thumbsup:", "\uD83D\uDC4D"),
     THUMB_DOWN(":thumbsdown:", "\uD83D\uDC4E"),
@@ -40,14 +42,14 @@ public enum Emoji
     private final String emote;
     private final boolean isAnimated;
 
-    Emoji(String emote, String unicode)
+    Emote(String emote, String unicode)
     {
         this.emote = emote;
         this.unicode = unicode;
         this.isAnimated = false;
     }
 
-    Emoji(String emote)
+    Emote(String emote)
     {
         this.emote = emote;
         this.unicode = "";
@@ -79,5 +81,10 @@ public enum Emoji
             return this.emote + " ";
         }
         return this.emote;
+    }
+
+    public Emoji getAsEmoji()
+    {
+        return Emoji.fromFormatted(getAsReaction());
     }
 }
