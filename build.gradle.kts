@@ -37,7 +37,7 @@ dependencies {
     implementation ("ch.qos.logback:logback-classic:1.4.6")
     implementation ("net.jodah:expiringmap:0.5.10")
     implementation ("se.michaelthelin.spotify:spotify-web-api-java:8.0.0")
-    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.3")
+    implementation ("me.carleslc.Simple-YAML:Simple-Yaml:1.8.4")
 
     //Web
     implementation ("org.jsoup:jsoup:1.15.4")
@@ -48,7 +48,7 @@ dependencies {
 
     //Discord
     implementation ("net.dv8tion:JDA:5.0.0-beta.6") // use beta version to fix discord voice
-    implementation ("com.github.walkyst:lavaplayer-fork:1.3.99.1")
+    implementation ("com.github.walkyst:lavaplayer-fork:1.4.0")
 
     //Database
     implementation ("org.postgresql:postgresql:42.6.0")
