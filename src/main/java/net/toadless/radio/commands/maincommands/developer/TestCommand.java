@@ -1,7 +1,7 @@
 package net.toadless.radio.commands.maincommands.developer;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.toadless.radio.modules.CooldownModule;
 import net.toadless.radio.objects.command.Command;
 import net.toadless.radio.objects.command.CommandEvent;
@@ -40,7 +40,7 @@ public class TestCommand extends Command
         event.sendDeletingMessage(new EmbedBuilder().setTitle("Test embed, now testing event waiting."));
         event.getRadio().getModules().get(CooldownModule.class).addCooldown(event.getMember(), this);
         event.getRadio().getEventWaiter().waitForEvent(
-                GuildMessageReceivedEvent.class,
+                MessageReceivedEvent.class,
                 msg -> msg.getAuthor().equals(event.getAuthor()),
                 msg -> event.replySuccess(msg.getMessage().getContentRaw()),
                 5,

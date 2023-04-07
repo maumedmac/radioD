@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.toadless.radio.Constants;
 import net.toadless.radio.objects.cache.GuildSettingsCache;
 import net.toadless.radio.objects.command.Command;

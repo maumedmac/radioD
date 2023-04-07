@@ -79,6 +79,7 @@ public class Radio extends ListenerAdapter
                         GatewayIntent.GUILD_MESSAGES,
                         GatewayIntent.GUILD_MESSAGE_REACTIONS,
                         GatewayIntent.GUILD_VOICE_STATES,
+                        GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
 
                         GatewayIntent.MESSAGE_CONTENT)
 
@@ -87,11 +88,13 @@ public class Radio extends ListenerAdapter
                         CacheFlag.CLIENT_STATUS,
                         CacheFlag.ROLE_TAGS,
                         CacheFlag.ONLINE_STATUS,
-                        CacheFlag.MEMBER_OVERRIDES)
+                        CacheFlag.MEMBER_OVERRIDES,
+                        CacheFlag.STICKER,
+                        CacheFlag.SCHEDULED_EVENTS)
 
                 .setHttpClient(okHttpClient)
 
-                .setMemberCachePolicy(MemberCachePolicy.NONE)
+                .setMemberCachePolicy(MemberCachePolicy.VOICE)
                 .setShardsTotal(-1)
 
                 .addEventListeners(
@@ -102,7 +105,7 @@ public class Radio extends ListenerAdapter
                         modules.getModules()
                 )
 
-                .setActivity(Activity.playing(" loading."))
+                .setActivity(Activity.playing("loading..."))
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .build();
     }

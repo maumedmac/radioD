@@ -1,7 +1,7 @@
 package net.toadless.radio.modules;
 
 import com.neovisionaries.i18n.CountryCode;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.toadless.radio.Radio;
 import net.toadless.radio.objects.bot.ConfigOption;
 import net.toadless.radio.objects.command.CommandEvent;

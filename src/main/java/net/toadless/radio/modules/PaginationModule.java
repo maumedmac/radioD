@@ -3,11 +3,14 @@ package net.toadless.radio.modules;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.jodah.expiringmap.ExpirationPolicy;
 import net.jodah.expiringmap.ExpiringMap;
 import net.toadless.radio.Radio;
-import net.toadless.radio.objects.Emoji;
+import net.toadless.radio.objects.Emote;
 import net.toadless.radio.objects.command.CommandEvent;
 import net.toadless.radio.objects.module.Module;
 import net.toadless.radio.objects.module.Modules;
@@ -52,9 +55,9 @@ public class PaginationModule extends Module
     }
 
     @Override
-    public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event)
+    public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
     {
-        if (event.getUser().isBot())
+        if (event.getUser().isBot() || !event.isFromGuild())
         {
             return;
         }
@@ -65,11 +68,11 @@ public class PaginationModule extends Module
             return;
         }
 
-        String code = event.getReactionEmote().getAsReactionCode();
+        String code = event.getReaction().getEmoji().getAsReactionCode();
         int currentPage = paginator.getCurrentPage();
         int maxPages = paginator.getMaxPages();
 
-        if (Emoji.ARROW_LEFT.getAsReaction().equals(code))
+        if (Emote.ARROW_LEFT.getAsReaction().equals(code))
         {
             if (currentPage != 0)
             {
@@ -77,7 +80,7 @@ public class PaginationModule extends Module
                 event.getChannel().editMessageEmbedsById(event.getMessageIdLong(), paginator.constructEmbed()).queue();
             }
         }
-        else if (Emoji.ARROW_RIGHT.getAsReaction().equals(code))
+        else if (Emote.ARROW_RIGHT.getAsReaction().equals(code))
         {
             if (currentPage != maxPages - 1)
             {
@@ -85,7 +88,7 @@ public class PaginationModule extends Module
                 event.getChannel().editMessageEmbedsById(event.getMessageIdLong(), paginator.constructEmbed()).queue();
             }
         }
-        else if (Emoji.WASTE_BASKET.getAsReaction().equals(code))
+        else if (Emote.WASTE_BASKET.getAsReaction().equals(code))
         {
             if (paginator.getAuthorId() == event.getUserIdLong())
             {
@@ -117,10 +120,10 @@ public class PaginationModule extends Module
 
             if (maxPages > 1)
             {
-                message.addReaction(Emoji.ARROW_LEFT.getAsReaction()).queue();
-                message.addReaction(Emoji.ARROW_RIGHT.getAsReaction()).queue();
+                message.addReaction(Emote.ARROW_LEFT.getAsEmoji()).queue();
+                message.addReaction(Emote.ARROW_RIGHT.getAsEmoji()).queue();
             }
-            message.addReaction(Emoji.WASTE_BASKET.getAsReaction()).queue();
+            message.addReaction(Emote.WASTE_BASKET.getAsEmoji()).queue();
         });
     }
 

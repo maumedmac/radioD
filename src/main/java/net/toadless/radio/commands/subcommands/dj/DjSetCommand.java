@@ -1,7 +1,7 @@
 package net.toadless.radio.commands.subcommands.dj;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.toadless.radio.objects.cache.GuildSettingsCache;
 import net.toadless.radio.objects.command.Command;
 import net.toadless.radio.objects.command.CommandEvent;

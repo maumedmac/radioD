@@ -5,8 +5,8 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
-import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.toadless.radio.Constants;
 import net.toadless.radio.modules.PaginationModule;
 import net.toadless.radio.objects.command.CommandEvent;
@@ -104,7 +104,7 @@ public class ExactSearchAudioLoader implements AudioLoadResultHandler
             );
 
             event.getRadio().getEventWaiter().waitForEvent(
-                    GuildMessageReceivedEvent.class,
+                    MessageReceivedEvent.class,
                     msg -> msg.getAuthor().equals(event.getAuthor()),
                     msg ->
                     {

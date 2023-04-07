@@ -4,9 +4,8 @@ import java.awt.*;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.toadless.radio.objects.Emoji;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.toadless.radio.objects.Emote;
 import net.toadless.radio.objects.command.Command;
 import net.toadless.radio.objects.command.CommandEvent;
 
@@ -20,7 +19,7 @@ public class EmbedUtils
     public static void sendError(MessageChannel channel, String errorText)
     {
         sendDeletingEmbed(channel, new EmbedBuilder()
-                .setDescription(Emoji.FAILURE.getAsChat() + errorText)
+                .setDescription(Emote.FAILURE.getAsChat() + errorText)
                 .setColor(Color.RED)
                 .setTimestamp(Instant.now()));
     }
@@ -32,14 +31,14 @@ public class EmbedUtils
         if (ctx.isChild())
         {
             sendDeletingEmbed(ctx.getChannel(), new EmbedBuilder()
-                    .setDescription(Emoji.FAILURE.getAsChat() + "You entered something wrong:\n`" + ctx.getPrefix() + cmd.getParent().getAliases().get(0) + " " + cmd.getName() + " " + cmd.getSyntax() + "`")
+                    .setDescription(Emote.FAILURE.getAsChat() + "You entered something wrong:\n`" + ctx.getPrefix() + cmd.getParent().getAliases().get(0) + " " + cmd.getName() + " " + cmd.getSyntax() + "`")
                     .setTimestamp(Instant.now())
                     .setColor(Color.RED), 30000);
         }
         else
         {
             sendDeletingEmbed(ctx.getChannel(), new EmbedBuilder()
-                    .setDescription(Emoji.FAILURE.getAsChat() + "You entered something wrong:\n`" + ctx.getPrefix() + cmd.getAliases().get(0) + " " + cmd.getSyntax() + "`")
+                    .setDescription(Emote.FAILURE.getAsChat() + "You entered something wrong:\n`" + ctx.getPrefix() + cmd.getAliases().get(0) + " " + cmd.getSyntax() + "`")
                     .setTimestamp(Instant.now())
                     .setColor(Color.RED), 20000);
         }
@@ -53,7 +52,7 @@ public class EmbedUtils
 
         cmd.getMemberRequiredPermissions().forEach(perm -> perms.append("*").append(perm.getName()).append("*").append("\n"));
         sendDeletingEmbed(ctx.getChannel(), new EmbedBuilder()
-                .setDescription(Emoji.FAILURE.getAsChat() +
+                .setDescription(Emote.FAILURE.getAsChat() +
                         " You do not have the following required permissions:"
                         + perms)
                 .setColor(Color.RED)
@@ -69,7 +68,7 @@ public class EmbedUtils
 
         cmd.getSelfRequiredPermissions().forEach(perm -> perms.append("*").append(perm.getName()).append("*").append("\n"));
         sendDeletingEmbed(ctx.getChannel(), new EmbedBuilder()
-                .setDescription(Emoji.FAILURE.getAsChat() +
+                .setDescription(Emote.FAILURE.getAsChat() +
                         " I do not have the following required permission:`"
                         + perms)
                 .setColor(Color.RED)
@@ -79,7 +78,7 @@ public class EmbedUtils
     public static void sendSuccess(MessageChannel channel, String successText)
     {
         sendDeletingEmbed(channel, new EmbedBuilder()
-                .setDescription(Emoji.SUCCESS.getAsChat() + successText)
+                .setDescription(Emote.SUCCESS.getAsChat() + successText)
                 .setColor(Color.GREEN)
                 .setTimestamp(Instant.now()));
     }
@@ -88,7 +87,7 @@ public class EmbedUtils
     {
         ctx.addErrorReaction();
         sendDeletingEmbed(ctx.getChannel(), new EmbedBuilder()
-                .setDescription(Emoji.FAILURE.getAsChat() + " `" + ctx.getCommand().getName() + "` is currently disabled!")
+                .setDescription(Emote.FAILURE.getAsChat() + " `" + ctx.getCommand().getName() + "` is currently disabled!")
                 .setColor(Color.RED)
                 .setTimestamp(Instant.now()));
     }

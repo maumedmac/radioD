@@ -6,9 +6,11 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.toadless.radio.Radio;
 import net.toadless.radio.objects.cache.GuildSettingsCache;
 import net.toadless.radio.objects.command.CommandEvent;
@@ -92,8 +94,13 @@ public class MusicModule extends Module
     }
 
     @Override
-    public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event)
+    public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event)
     {
+        if (!event.isFromGuild())
+        {
+            return;
+        }
+
         if (event.getUserIdLong() == event.getJDA().getSelfUser().getIdLong())
         {
             return;
@@ -126,7 +133,7 @@ public class MusicModule extends Module
             return;
         }
 
-        switch (event.getReactionEmote().getAsReactionCode())
+        switch (event.getReaction().getEmoji().getAsReactionCode())
         {
             case "\u2B05\uFE0F" -> previousFromController(manager, member);
             case "\u27A1\uFE0F" -> skipFromController(manager, member);
@@ -138,7 +145,7 @@ public class MusicModule extends Module
             case "\u274C" -> cleanupPlayer(event.getGuild(), member.getAsMention() + " disconnected me.");
         }
 
-        if (event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_MANAGE))
+        if (event.getGuild().getSelfMember().getPermissions(event.getChannel().asTextChannel()).contains(Permission.MESSAGE_MANAGE))
         {
             event.getReaction().removeReaction(event.getUser()).queue(success -> {}, failure -> {});
         }
@@ -224,13 +231,13 @@ public class MusicModule extends Module
         this.radio.getShardManager().getGuilds().forEach(guild ->
         {
             GuildMusicManager manager = musicHandlers.get(guild.getIdLong());
-            VoiceChannel vc = guild.getAudioManager().getConnectedChannel();
-            if (vc == null)
+            AudioChannelUnion ac = guild.getAudioManager().getConnectedChannel();
+            if (ac == null)
             {
                 return; // if we aren't connected there's no point in checking.
             }
 
-            long humansInVC = vc.getMembers().stream().filter(member -> !member.getUser().isBot()).count();
+            long humansInVC = ac.getMembers().stream().filter(member -> !member.getUser().isBot()).count();
             if (humansInVC == 0)
             {
                 manager.getPlayer().destroy();
@@ -283,7 +290,7 @@ public class MusicModule extends Module
 
     public void play(GuildMusicManager manager, String query, Consumer<CommandException> failure, CommandEvent event, SearchEngine searchEngine)
     {
-        VoiceChannel channel = event.getMember().getVoiceState().getChannel(); //Safe due to CommandChecks
+        VoiceChannel channel = event.getMember().getVoiceState().getChannel().asVoiceChannel(); //Safe due to CommandChecks
 
         Matcher matcher = SPOTIFY_URL_PATTERN.matcher(query);
 
@@ -323,9 +330,10 @@ public class MusicModule extends Module
     }
 
     @Override
-    public void onGuildVoiceLeave(GuildVoiceLeaveEvent event)
+    public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event)
     {
-        if (event.getChannelLeft() != Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getIdLong())).getVoiceState()).getChannel())
+        if (event.getChannelLeft() != Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getIdLong())).getVoiceState()).getChannel() ||
+                event.getChannelLeft() == null)
         {
             return;
         }
@@ -342,18 +350,18 @@ public class MusicModule extends Module
         }
     }
 
-    @Override
-    public void onGuildVoiceMove(GuildVoiceMoveEvent event)
-    {
-        if (event.getChannelLeft() != Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getIdLong())).getVoiceState()).getChannel())
-        {
-            return;
-        }
-
-        long humansInVC = event.getChannelLeft().getMembers().stream().filter(member -> !member.getUser().isBot()).count();
-        if (humansInVC == 0)
-        {
-            cleanupPlayer(event.getGuild(), "Disconnected due to inactivity.");
-        }
-    }
+//    @Override
+//    public void onGuildVoiceMove(GuildVoiceMoveEvent event)
+//    {
+//        if (event.getChannelLeft() != Objects.requireNonNull(Objects.requireNonNull(event.getGuild().getMemberById(event.getJDA().getSelfUser().getIdLong())).getVoiceState()).getChannel())
+//        {
+//            return;
+//        }
+//
+//        long humansInVC = event.getChannelLeft().getMembers().stream().filter(member -> !member.getUser().isBot()).count();
+//        if (humansInVC == 0)
+//        {
+//            cleanupPlayer(event.getGuild(), "Disconnected due to inactivity.");
+//        }
+//    }
 }

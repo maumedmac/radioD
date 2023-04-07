@@ -8,10 +8,14 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.ChannelType;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.toadless.radio.Constants;
 import net.toadless.radio.Radio;
-import net.toadless.radio.objects.Emoji;
+import net.toadless.radio.objects.Emote;
 import net.toadless.radio.objects.bot.ConfigOption;
 import net.toadless.radio.objects.cache.GuildSettingsCache;
 import net.toadless.radio.util.EmbedUtils;
@@ -59,16 +63,16 @@ public class CommandEvent
 
     public void addErrorReaction()
     {
-        getMessage().addReaction(Emoji.FAILURE.getAsReaction()).queue(
-                success -> getMessage().removeReaction(Emoji.FAILURE.getAsReaction()).queueAfter(10, TimeUnit.SECONDS, null,
+        getMessage().addReaction(Emote.FAILURE.getAsEmoji()).queue(
+                success -> getMessage().removeReaction(Emote.FAILURE.getAsEmoji()).queueAfter(10, TimeUnit.SECONDS, null,
                         error -> LOGGER.debug("A command exception occurred", error)),
                 error -> LOGGER.debug("A command exception occurred", error));
     }
 
     public void addSuccessReaction()
     {
-        getMessage().addReaction(Emoji.SUCCESS.getAsReaction()).queue(
-                success -> getMessage().removeReaction(Emoji.SUCCESS.getAsReaction()).queueAfter(10, TimeUnit.SECONDS, null,
+        getMessage().addReaction(Emote.SUCCESS.getAsEmoji()).queue(
+                success -> getMessage().removeReaction(Emote.SUCCESS.getAsEmoji()).queueAfter(10, TimeUnit.SECONDS, null,
                         error -> LOGGER.debug("A command exception occurred", error)),
                 error -> LOGGER.debug("A command exception occurred", error));
     }
@@ -149,7 +153,7 @@ public class CommandEvent
         {
             throw new IllegalStateException("Event did not occur in a text channel.");
         }
-        return event.getTextChannel();
+        return event.getChannel().asTextChannel();
     }
 
     public void replySuccess(String successText)

@@ -98,7 +98,7 @@ public class CommandModule extends Module
 
         if (event.isFromGuild())
         {
-            if (!event.getTextChannel().canTalk())
+            if (!event.getChannel().asTextChannel().canTalk())
             {
                 return;
             }

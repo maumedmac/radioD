@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.toadless.radio.modules.MusicModule;
 import net.toadless.radio.objects.command.CommandEvent;
 import net.toadless.radio.objects.exception.*;
@@ -34,12 +36,12 @@ public class CommandChecks
             callback.accept(new CommandResultException("You are not in a voice channel."));
             return true;
         }
-        else if (selfState.inVoiceChannel() && !state.getChannel().getMembers().contains(event.getSelfMember()))
+        else if (selfState.inAudioChannel() && !state.getChannel().getMembers().contains(event.getSelfMember()))
         {
             callback.accept(new CommandResultException("You are not in a voice channel with me."));
             return true;
         }
-        else if (!selfState.inVoiceChannel() && !event.getSelfMember().hasPermission(state.getChannel(), Permission.VIEW_CHANNEL, Permission.VOICE_SPEAK))
+        else if (!selfState.inAudioChannel() && !event.getSelfMember().hasPermission(state.getChannel(), Permission.VIEW_CHANNEL, Permission.VOICE_SPEAK))
         {
             callback.accept(new CommandException("I cannot join / speak in your channel."));
             return true;
@@ -57,7 +59,7 @@ public class CommandChecks
             callback.accept(new CommandResultException("Something went wrong when finding your VC."));
             return true;
         }
-        else if (!selfState.inVoiceChannel())
+        else if (!selfState.inAudioChannel())
         {
             callback.accept(new CommandResultException("I am not in a voice channel."));
             return true;
@@ -79,7 +81,7 @@ public class CommandChecks
 
     public static boolean canSee(MessageChannel channel, Member selfMember, String name, Consumer<CommandException> callback)
     {
-        if (!selfMember.hasPermission((GuildChannel) channel, Permission.VIEW_CHANNEL, Permission.MESSAGE_WRITE, Permission.MESSAGE_EMBED_LINKS))
+        if (!selfMember.hasPermission((GuildChannel) channel, Permission.VIEW_CHANNEL, Permission.MESSAGE_SEND, Permission.MESSAGE_EMBED_LINKS))
         {
             callback.accept(new CommandResultException("I cannot access " + name));
             return true;
