@@ -26,7 +26,6 @@ java {
 
 repositories {
     mavenCentral()
-    maven { setUrl ("https://m2.dv8tion.net/releases") }
     maven { setUrl ("https://jitpack.io") }
 }
 
@@ -48,7 +47,7 @@ dependencies {
     implementation ("org.codehaus.groovy:groovy-jsr223:3.0.17")
 
     //Discord
-    implementation ("net.dv8tion:JDA:4.4.1_353")
+    implementation ("net.dv8tion:JDA:5.0.0-beta.6") // use beta version to fix discord voice
     implementation ("com.github.walkyst:lavaplayer-fork:1.3.99.1")
 
     //Database
