@@ -47,7 +47,7 @@ dependencies {
     implementation ("org.codehaus.groovy:groovy-jsr223:3.0.17")
 
     //Discord
-    implementation ("net.dv8tion:JDA:5.0.0-beta.6") // use beta version to fix discord voice
+    implementation ("net.dv8tion:JDA:5.0.0-beta.8") // use beta version to fix discord voice
     implementation ("com.github.walkyst:lavaplayer-fork:1.4.0")
 
     //Database
